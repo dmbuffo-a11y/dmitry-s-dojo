@@ -1,10 +1,11 @@
 import { useState, useMemo } from 'react';
-import { Search, Plus, Check } from 'lucide-react';
+import { Search, Plus, Check, Filter } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { searchKodokanThrows } from '@/data/kodokanThrows';
+import { searchKodokanThrows, throwCategories, ThrowCategory, KodokanThrow } from '@/data/kodokanThrows';
 import { JudoThrow, VideoItem } from '@/types/judo';
 import { getYouTubeThumbnailUrl } from '@/types/judo';
+import { cn } from '@/lib/utils';
 
 interface ThrowSearchProps {
   existingThrows: JudoThrow[];
@@ -13,20 +14,20 @@ interface ThrowSearchProps {
 
 export function ThrowSearch({ existingThrows, onAddThrow }: ThrowSearchProps) {
   const [query, setQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState<ThrowCategory | null>(null);
   const [addedIds, setAddedIds] = useState<Set<string>>(new Set());
 
   const searchResults = useMemo(() => {
-    return searchKodokanThrows(query);
-  }, [query]);
+    // Only show results if there's a query OR a category filter
+    if (!query.trim() && !selectedCategory) return [];
+    return searchKodokanThrows(query, selectedCategory || undefined);
+  }, [query, selectedCategory]);
 
-  // Check if a throw already exists in user's library
   const isThrowInLibrary = (name: string) => {
-    return existingThrows.some(t => 
-      t.name.toLowerCase() === name.toLowerCase()
-    );
+    return existingThrows.some(t => t.name.toLowerCase() === name.toLowerCase());
   };
 
-  const handleAdd = (throwData: typeof searchResults[0]) => {
+  const handleAdd = (throwData: KodokanThrow) => {
     const video = throwData.videos[0];
     onAddThrow(throwData.name, throwData.kanji, video);
     setAddedIds(prev => new Set([...prev, throwData.name]));
@@ -36,6 +37,7 @@ export function ThrowSearch({ existingThrows, onAddThrow }: ThrowSearchProps) {
 
   return (
     <div className="space-y-4">
+      {/* Search Input */}
       <div className="relative">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
         <Input
@@ -46,7 +48,32 @@ export function ThrowSearch({ existingThrows, onAddThrow }: ThrowSearchProps) {
         />
       </div>
 
-      {query.trim() && searchResults.length > 0 && (
+      {/* Category Filter */}
+      <div className="flex flex-wrap gap-2">
+        <Button
+          variant={selectedCategory === null ? "default" : "outline"}
+          size="sm"
+          onClick={() => setSelectedCategory(null)}
+          className="gap-1"
+        >
+          <Filter className="w-3 h-3" />
+          Все
+        </Button>
+        {throwCategories.map((cat) => (
+          <Button
+            key={cat.id}
+            variant={selectedCategory === cat.id ? "default" : "outline"}
+            size="sm"
+            onClick={() => setSelectedCategory(cat.id)}
+          >
+            {cat.name}
+            <span className="ml-1 text-xs opacity-70">{cat.nameJa}</span>
+          </Button>
+        ))}
+      </div>
+
+      {/* Results */}
+      {searchResults.length > 0 && (
         <div className="space-y-2 max-h-80 overflow-y-auto pr-2">
           {searchResults.map((throwData) => {
             const inLibrary = isThrowInLibrary(throwData.name);
@@ -54,6 +81,7 @@ export function ThrowSearch({ existingThrows, onAddThrow }: ThrowSearchProps) {
             const thumbnailUrl = throwData.videos[0]?.url 
               ? getYouTubeThumbnailUrl(throwData.videos[0].url)
               : null;
+            const categoryInfo = throwCategories.find(c => c.id === throwData.category);
 
             return (
               <div
@@ -76,9 +104,14 @@ export function ThrowSearch({ existingThrows, onAddThrow }: ThrowSearchProps) {
                   <h4 className="font-semibold text-foreground truncate">
                     {throwData.name}
                   </h4>
-                  {throwData.kanji && (
-                    <p className="text-sm text-muted-foreground">{throwData.kanji}</p>
-                  )}
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    {throwData.kanji && <span>{throwData.kanji}</span>}
+                    {categoryInfo && (
+                      <span className="text-xs px-1.5 py-0.5 rounded bg-muted">
+                        {categoryInfo.name}
+                      </span>
+                    )}
+                  </div>
                 </div>
 
                 {/* Add button */}
@@ -92,12 +125,14 @@ export function ThrowSearch({ existingThrows, onAddThrow }: ThrowSearchProps) {
                   {inLibrary || justAdded ? (
                     <>
                       <Check className="w-4 h-4" />
-                      {inLibrary ? 'В библиотеке' : 'Добавлено'}
+                      <span className="hidden sm:inline">
+                        {inLibrary ? 'В библиотеке' : 'Добавлено'}
+                      </span>
                     </>
                   ) : (
                     <>
                       <Plus className="w-4 h-4" />
-                      Добавить
+                      <span className="hidden sm:inline">Добавить</span>
                     </>
                   )}
                 </Button>
@@ -107,9 +142,9 @@ export function ThrowSearch({ existingThrows, onAddThrow }: ThrowSearchProps) {
         </div>
       )}
 
-      {query.trim() && searchResults.length === 0 && (
+      {(query.trim() || selectedCategory) && searchResults.length === 0 && (
         <p className="text-center text-muted-foreground py-6">
-          Бросок не найден. Попробуйте другое название.
+          Бросок не найден. Попробуйте другое название или категорию.
         </p>
       )}
     </div>
