@@ -3,6 +3,7 @@ import { Layout } from '@/components/Layout';
 import { ThrowCard } from '@/components/ThrowCard';
 import { ThrowDetail } from '@/components/ThrowDetail';
 import { AddThrowModal } from '@/components/AddThrowModal';
+import { ThrowSearch } from '@/components/ThrowSearch';
 import { useThrows } from '@/hooks/useThrows';
 import { JudoThrow } from '@/types/judo';
 
@@ -14,7 +15,7 @@ export default function MyThrows() {
     <Layout>
       <div className="container mx-auto px-4 md:px-6 py-12 md:py-16">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-12 animate-fade-in">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 animate-fade-in">
           <div>
             <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-2">
               My Throws
@@ -24,6 +25,11 @@ export default function MyThrows() {
             </p>
           </div>
           <AddThrowModal onAdd={addThrow} />
+        </div>
+
+        {/* Search */}
+        <div className="mb-10 animate-fade-in" style={{ animationDelay: '100ms' }}>
+          <ThrowSearch existingThrows={myThrows} onAddThrow={addThrow} />
         </div>
 
         {/* Grid */}
