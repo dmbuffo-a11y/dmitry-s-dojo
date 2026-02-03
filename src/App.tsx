@@ -9,6 +9,7 @@ import BeforeCompetition from "./pages/BeforeCompetition";
 import WorkInProgress from "./pages/WorkInProgress";
 import LondonJudo from "./pages/LondonJudo";
 import TrendingNow from "./pages/TrendingNow";
+import Install from "./pages/Install";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/work-in-progress" element={<WorkInProgress />} />
           <Route path="/london-judo" element={<LondonJudo />} />
           <Route path="/trending" element={<TrendingNow />} />
+          <Route path="/install" element={<Install />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
