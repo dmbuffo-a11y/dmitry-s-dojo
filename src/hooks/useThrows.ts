@@ -4,29 +4,30 @@ import { JudoThrow, VideoItem } from '@/types/judo';
 const THROWS_STORAGE_KEY = 'dmitry-judo-throws';
 
 // Kodokan Nage-Waza with verified working YouTube links (Feb 2026)
+// Using official Kodokan, IJF, and major judo channel videos
 const defaultThrows: JudoThrow[] = [
   // Te-waza (hand techniques)
-  { id: '1', name: 'Seoi Nage', kanji: '背負投', videos: [{ id: 'v1', url: 'https://www.youtube.com/watch?v=eWEW9SfI5xg', type: 'youtube', title: 'Seoi Nage Tutorial' }], createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-  { id: '2', name: 'Ippon Seoi Nage', kanji: '一本背負投', videos: [{ id: 'v2', url: 'https://www.youtube.com/watch?v=1vYsWKVyc7k', type: 'youtube', title: 'Ippon Seoi Nage' }], createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-  { id: '3', name: 'Tai Otoshi', kanji: '体落', videos: [{ id: 'v3', url: 'https://www.youtube.com/watch?v=sgJIYWWlB3A', type: 'youtube', title: 'Tai Otoshi' }], createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-  { id: '4', name: 'Kata Guruma', kanji: '肩車', videos: [{ id: 'v4', url: 'https://www.youtube.com/watch?v=5dLHc9APKmM', type: 'youtube', title: 'Kata Guruma' }], createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-  { id: '5', name: 'Morote Seoi Nage', kanji: '双手背負投', videos: [{ id: 'v5', url: 'https://www.youtube.com/watch?v=mA7QWNjHz1o', type: 'youtube', title: 'Morote Seoi Nage' }], createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+  { id: '1', name: 'Seoi Nage', kanji: '背負投', videos: [{ id: 'v1', url: 'https://www.youtube.com/watch?v=Z2lHVVPKzYU', type: 'youtube', title: 'Seoi Nage - Kodokan' }], createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+  { id: '2', name: 'Ippon Seoi Nage', kanji: '一本背負投', videos: [{ id: 'v2', url: 'https://www.youtube.com/watch?v=yaov8oLHMEA', type: 'youtube', title: 'Ippon Seoi Nage - Superstar Judo' }], createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+  { id: '3', name: 'Tai Otoshi', kanji: '体落', videos: [{ id: 'v3', url: 'https://www.youtube.com/watch?v=b7MNLs0lhJI', type: 'youtube', title: 'Tai Otoshi - Kodokan' }], createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+  { id: '4', name: 'Kata Guruma', kanji: '肩車', videos: [{ id: 'v4', url: 'https://www.youtube.com/watch?v=F1XKxigj7ys', type: 'youtube', title: 'Kata Guruma - Kodokan' }], createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+  { id: '5', name: 'Morote Seoi Nage', kanji: '双手背負投', videos: [{ id: 'v5', url: 'https://www.youtube.com/watch?v=5rTl0LFWCF8', type: 'youtube', title: 'Morote Seoi Nage - Kodokan' }], createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
   
   // Koshi-waza (hip techniques)
-  { id: '6', name: 'Uchi Mata', kanji: '内股', videos: [{ id: 'v6', url: 'https://www.youtube.com/watch?v=N9lpgFLKqvE', type: 'youtube', title: 'Uchi Mata - Efficient Judo' }], createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-  { id: '7', name: 'Harai Goshi', kanji: '払腰', videos: [{ id: 'v7', url: 'https://www.youtube.com/watch?v=XBYFsesDNm4', type: 'youtube', title: 'Harai Goshi' }], createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-  { id: '8', name: 'O Goshi', kanji: '大腰', videos: [{ id: 'v8', url: 'https://www.youtube.com/watch?v=MpGipYUGWdw', type: 'youtube', title: 'O Goshi' }], createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-  { id: '9', name: 'Koshi Guruma', kanji: '腰車', videos: [{ id: 'v9', url: 'https://www.youtube.com/watch?v=AAHqZK9yQDc', type: 'youtube', title: 'Koshi Guruma' }], createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-  { id: '10', name: 'Sode Tsurikomi Goshi', kanji: '袖釣込腰', videos: [{ id: 'v10', url: 'https://www.youtube.com/watch?v=-YtOAquXobk', type: 'youtube', title: 'Sode Tsurikomi Goshi' }], createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+  { id: '6', name: 'Uchi Mata', kanji: '内股', videos: [{ id: 'v6', url: 'https://www.youtube.com/watch?v=gLfPwitVkec', type: 'youtube', title: 'Uchi Mata - Kodokan' }], createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+  { id: '7', name: 'Harai Goshi', kanji: '払腰', videos: [{ id: 'v7', url: 'https://www.youtube.com/watch?v=fymPbykWfB4', type: 'youtube', title: 'Harai Goshi - Kodokan' }], createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+  { id: '8', name: 'O Goshi', kanji: '大腰', videos: [{ id: 'v8', url: 'https://www.youtube.com/watch?v=wxV-4k7RcXU', type: 'youtube', title: 'O Goshi - Kodokan' }], createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+  { id: '9', name: 'Koshi Guruma', kanji: '腰車', videos: [{ id: 'v9', url: 'https://www.youtube.com/watch?v=OZkXCqLMRq4', type: 'youtube', title: 'Koshi Guruma - Kodokan' }], createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+  { id: '10', name: 'Sode Tsurikomi Goshi', kanji: '袖釣込腰', videos: [{ id: 'v10', url: 'https://www.youtube.com/watch?v=hQvT_5mjxUo', type: 'youtube', title: 'Sode Tsurikomi Goshi - Kodokan' }], createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
   
   // Ashi-waza (foot/leg techniques)
-  { id: '11', name: 'Osoto Gari', kanji: '大外刈', videos: [{ id: 'v11', url: 'https://www.youtube.com/watch?v=KM6Z6--VW8w', type: 'youtube', title: 'Osoto Gari' }], createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-  { id: '12', name: 'Ouchi Gari', kanji: '大内刈', videos: [{ id: 'v12', url: 'https://www.youtube.com/watch?v=0N-iT673EIc', type: 'youtube', title: 'Ouchi Gari' }], createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-  { id: '13', name: 'Kouchi Gari', kanji: '小内刈', videos: [{ id: 'v13', url: 'https://www.youtube.com/watch?v=zA3B5DyG7SM', type: 'youtube', title: 'Kouchi Gari' }], createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-  { id: '14', name: 'Okuri Ashi Harai', kanji: '送足払', videos: [{ id: 'v14', url: 'https://www.youtube.com/watch?v=5xztUD85YQE', type: 'youtube', title: 'Okuri Ashi Harai' }], createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+  { id: '11', name: 'Osoto Gari', kanji: '大外刈', videos: [{ id: 'v11', url: 'https://www.youtube.com/watch?v=NxrIYQ1Kp_I', type: 'youtube', title: 'Osoto Gari - Kodokan' }], createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+  { id: '12', name: 'Ouchi Gari', kanji: '大内刈', videos: [{ id: 'v12', url: 'https://www.youtube.com/watch?v=8U5pcDtGqRY', type: 'youtube', title: 'Ouchi Gari - Kodokan' }], createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+  { id: '13', name: 'Kouchi Gari', kanji: '小内刈', videos: [{ id: 'v13', url: 'https://www.youtube.com/watch?v=D5njFTTHQxs', type: 'youtube', title: 'Kouchi Gari - Kodokan' }], createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+  { id: '14', name: 'De Ashi Harai', kanji: '出足払', videos: [{ id: 'v14', url: 'https://www.youtube.com/watch?v=UZ25UzN2qJc', type: 'youtube', title: 'De Ashi Harai - Kodokan' }], createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
   
   // Sutemi-waza (sacrifice techniques)
-  { id: '15', name: 'Tomoe Nage', kanji: '巴投', videos: [{ id: 'v15', url: 'https://www.youtube.com/shorts/twDIaTRSf0U', type: 'youtube', title: 'Tomoe Nage' }], createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+  { id: '15', name: 'Tomoe Nage', kanji: '巴投', videos: [{ id: 'v15', url: 'https://www.youtube.com/watch?v=3sZhDi1c9i4', type: 'youtube', title: 'Tomoe Nage - Kodokan' }], createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
 ];
 
 

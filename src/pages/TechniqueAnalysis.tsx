@@ -20,13 +20,13 @@ export default function TechniqueAnalysis() {
         <div className="text-center mb-16 animate-fade-in">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent mb-6">
             <Microscope className="w-4 h-4 text-accent-foreground" />
-            <span className="text-sm font-medium text-accent-foreground">Детальный анализ</span>
+            <span className="text-sm font-medium text-accent-foreground">Frame-by-Frame</span>
           </div>
           <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-            Разбор техники
+            Technique Analysis
           </h1>
           <p className="text-lg text-muted-foreground max-w-xl mx-auto">
-            Замедляй, останавливай, изучай каждое движение покадрово
+            Slow down, pause, study every movement frame by frame
           </p>
         </div>
 
@@ -97,10 +97,10 @@ export default function TechniqueAnalysis() {
         ) : (
           <div className="text-center py-24 animate-fade-in">
             <p className="text-xl text-muted-foreground mb-2">
-              Нет бросков с видео
+              No throws with videos
             </p>
             <p className="text-muted-foreground">
-              Добавьте броски с YouTube-видео в разделе My Throws
+              Add throws with YouTube videos in the My Throws section
             </p>
           </div>
         )}
@@ -108,9 +108,9 @@ export default function TechniqueAnalysis() {
         {/* Instructions */}
         <div className="mt-16 text-center animate-fade-in" style={{ animationDelay: '500ms' }}>
           <div className="inline-flex flex-wrap justify-center gap-4 text-sm text-muted-foreground">
-            <span className="px-3 py-1 rounded-full bg-muted">0.25x — супер замедление</span>
-            <span className="px-3 py-1 rounded-full bg-muted">Покадровая прокрутка</span>
-            <span className="px-3 py-1 rounded-full bg-muted">Удобные горячие клавиши</span>
+            <span className="px-3 py-1 rounded-full bg-muted">0.25x super slow-mo</span>
+            <span className="px-3 py-1 rounded-full bg-muted">Frame-by-frame scrubbing</span>
+            <span className="px-3 py-1 rounded-full bg-muted">Keyboard shortcuts</span>
           </div>
         </div>
       </div>

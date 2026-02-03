@@ -185,7 +185,7 @@ export function VideoAnalyzer({ videoUrl, title, isOpen, onClose }: VideoAnalyze
       <div className="flex items-center justify-between p-4 border-b border-border">
         <div>
           <h2 className="text-xl font-bold text-foreground">{title}</h2>
-          <p className="text-sm text-muted-foreground">Разбор техники</p>
+          <p className="text-sm text-muted-foreground">Technique Analysis</p>
         </div>
         <Button variant="ghost" size="icon" onClick={onClose}>
           <X className="w-6 h-6" />
@@ -223,7 +223,7 @@ export function VideoAnalyzer({ videoUrl, title, isOpen, onClose }: VideoAnalyze
             variant="outline"
             size="icon"
             onClick={stepBackward}
-            title="Назад на кадр (Shift + ←)"
+            title="Back one frame (Shift + ←)"
             className="h-12 w-12"
           >
             <SkipBack className="w-5 h-5" />
@@ -234,7 +234,7 @@ export function VideoAnalyzer({ videoUrl, title, isOpen, onClose }: VideoAnalyze
             variant="outline"
             size="icon"
             onClick={skipBackward}
-            title="Назад 5 сек (←)"
+            title="Back 5 sec (←)"
             className="h-12 w-12"
           >
             <Rewind className="w-5 h-5" />
@@ -245,7 +245,7 @@ export function VideoAnalyzer({ videoUrl, title, isOpen, onClose }: VideoAnalyze
             variant="default"
             size="icon"
             onClick={togglePlay}
-            title="Пауза/Воспроизведение (Пробел)"
+            title="Play/Pause (Space)"
             className="h-16 w-16 rounded-full"
           >
             {isPlaying ? (
@@ -260,7 +260,7 @@ export function VideoAnalyzer({ videoUrl, title, isOpen, onClose }: VideoAnalyze
             variant="outline"
             size="icon"
             onClick={skipForward}
-            title="Вперёд 5 сек (→)"
+            title="Forward 5 sec (→)"
             className="h-12 w-12"
           >
             <FastForward className="w-5 h-5" />
@@ -271,7 +271,7 @@ export function VideoAnalyzer({ videoUrl, title, isOpen, onClose }: VideoAnalyze
             variant="outline"
             size="icon"
             onClick={stepForward}
-            title="Вперёд на кадр (Shift + →)"
+            title="Forward one frame (Shift + →)"
             className="h-12 w-12"
           >
             <SkipForward className="w-5 h-5" />
@@ -280,7 +280,7 @@ export function VideoAnalyzer({ videoUrl, title, isOpen, onClose }: VideoAnalyze
 
         {/* Speed controls */}
         <div className="flex items-center justify-center gap-2">
-          <span className="text-sm text-muted-foreground mr-2">Скорость:</span>
+          <span className="text-sm text-muted-foreground mr-2">Speed:</span>
           {SPEEDS.map((speed) => (
             <Button
               key={speed}
@@ -300,7 +300,7 @@ export function VideoAnalyzer({ videoUrl, title, isOpen, onClose }: VideoAnalyze
         {/* Keyboard hints */}
         <div className="text-center text-xs text-muted-foreground">
           <span className="hidden md:inline">
-            Пробел — пауза • ← → — 5 сек • Shift + ← → — покадрово • Esc — закрыть
+            Space — play/pause • ← → — 5 sec • Shift + ← → — frame by frame • Esc — close
           </span>
         </div>
       </div>
