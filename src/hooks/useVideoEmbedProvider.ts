@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import type { YouTubeEmbedProvider } from '@/types/judo';
 
 const STORAGE_KEY = 'dmitry-video-embed-provider';
-const DEFAULT_PROVIDER: YouTubeEmbedProvider = 'youtube-nocookie';
+// Default to Piped since YouTube embeds are often blocked
+const DEFAULT_PROVIDER: YouTubeEmbedProvider = 'piped';
 
 const isProvider = (value: string | null): value is YouTubeEmbedProvider => {
   return value === 'youtube' || value === 'youtube-nocookie' || value === 'piped' || value === 'invidious';
