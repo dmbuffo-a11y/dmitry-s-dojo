@@ -1,22 +1,14 @@
 import { useState } from 'react';
-import { RefreshCw } from 'lucide-react';
 import { Layout } from '@/components/Layout';
 import { ThrowCard } from '@/components/ThrowCard';
 import { ThrowDetail } from '@/components/ThrowDetail';
 import { AddThrowModal } from '@/components/AddThrowModal';
 import { useThrows } from '@/hooks/useThrows';
 import { JudoThrow } from '@/types/judo';
-import { Button } from '@/components/ui/button';
-import { toast } from 'sonner';
 
 export default function MyThrows() {
-  const { myThrows, addThrow, resetToDefaults, isLoading } = useThrows();
+  const { myThrows, addThrow, isLoading } = useThrows();
   const [selectedThrow, setSelectedThrow] = useState<JudoThrow | null>(null);
-
-  const handleReset = () => {
-    resetToDefaults();
-    toast.success('Библиотека сброшена к стандартным броскам');
-  };
 
   return (
     <Layout>
@@ -31,13 +23,7 @@ export default function MyThrows() {
               Your personal technique library
             </p>
           </div>
-          <div className="flex gap-3">
-            <Button variant="outline" onClick={handleReset} className="gap-2">
-              <RefreshCw className="w-4 h-4" />
-              Сбросить
-            </Button>
-            <AddThrowModal onAdd={addThrow} />
-          </div>
+          <AddThrowModal onAdd={addThrow} />
         </div>
 
         {/* Grid */}

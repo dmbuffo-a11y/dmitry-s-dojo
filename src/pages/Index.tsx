@@ -8,6 +8,7 @@ import beforeCompetitionIcon from '@/assets/icons/before-competition-icon.png';
 import workInProgressIcon from '@/assets/icons/work-in-progress-icon.png';
 import londonJudoIcon from '@/assets/icons/london-judo-icon.png';
 import trendingIcon from '@/assets/icons/trending-icon.png';
+import analysisIcon from '@/assets/icons/analysis-icon.png';
 
 const sections = [
   {
@@ -15,6 +16,12 @@ const sections = [
     title: 'My Throws',
     description: 'Your personal library of throws. Videos, techniques, and the moves that define your game.',
     image: myThrowsIcon,
+  },
+  {
+    to: '/analysis',
+    title: 'Разбор техники',
+    description: 'Замедляй, останавливай, изучай каждое движение покадрово.',
+    image: analysisIcon,
   },
   {
     to: '/before-competition',
