@@ -4,6 +4,7 @@ import { NavigationCard } from '@/components/NavigationCard';
 
 // Import illustrated icons
 import myThrowsIcon from '@/assets/icons/my-throws-icon.png';
+import myVideosIcon from '@/assets/icons/my-videos-icon.png';
 import beforeCompetitionIcon from '@/assets/icons/before-competition-icon.png';
 import workInProgressIcon from '@/assets/icons/work-in-progress-icon.png';
 import londonJudoIcon from '@/assets/icons/london-judo-icon.png';
@@ -16,6 +17,12 @@ const sections = [
     title: 'My Throws',
     description: 'Your personal library of throws. Videos, techniques, and the moves that define your game.',
     image: myThrowsIcon,
+  },
+  {
+    to: '/my-videos',
+    title: 'My Videos',
+    description: 'Твои лучшие моменты и любимые видео. Собственные записи и вдохновляющие клипы.',
+    image: myVideosIcon,
   },
   {
     to: '/analysis',
