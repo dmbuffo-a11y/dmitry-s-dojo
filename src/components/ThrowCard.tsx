@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Play } from 'lucide-react';
-import { JudoThrow, getYouTubeEmbedUrl } from '@/types/judo';
+import { JudoThrow, getYouTubeThumbnailUrl } from '@/types/judo';
 import { cn } from '@/lib/utils';
 
 interface ThrowCardProps {
@@ -13,7 +13,7 @@ export function ThrowCard({ judoThrow, onClick, isWip }: ThrowCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const hasVideos = judoThrow.videos.length > 0;
   const thumbnailUrl = hasVideos && judoThrow.videos[0].type === 'youtube'
-    ? `https://img.youtube.com/vi/${getYouTubeEmbedUrl(judoThrow.videos[0].url)?.split('/').pop()}/mqdefault.jpg`
+    ? getYouTubeThumbnailUrl(judoThrow.videos[0].url)
     : null;
 
   return (

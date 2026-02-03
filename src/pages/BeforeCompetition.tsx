@@ -3,8 +3,7 @@ import { Target, Play, Maximize2, X } from 'lucide-react';
 import { Layout } from '@/components/Layout';
 import { Button } from '@/components/ui/button';
 import { useThrows } from '@/hooks/useThrows';
-import { getYouTubeEmbedUrl } from '@/types/judo';
-import { cn } from '@/lib/utils';
+import { VideoViewer } from '@/components/VideoViewer';
 
 const focusStatements = [
   "Stay calm. Stay centered.",
@@ -84,24 +83,18 @@ export default function BeforeCompetition() {
               </h2>
               <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {keyThrows.map((judoThrow) => {
-                  const embedUrl = getYouTubeEmbedUrl(judoThrow.videos[0].url);
                   return (
                     <div key={judoThrow.id} className="card-universe overflow-hidden">
-                      <div className="aspect-video relative bg-muted">
-                        {embedUrl && (
-                          <iframe
-                            src={embedUrl}
-                            title={judoThrow.name}
-                            className="w-full h-full"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowFullScreen
-                          />
-                        )}
+                      <div className="relative bg-muted p-4">
+                        <VideoViewer
+                          title={judoThrow.name}
+                          video={judoThrow.videos[0]}
+                        />
                         <Button
                           size="icon"
                           variant="secondary"
                           className="absolute top-2 right-2 rounded-full opacity-80 hover:opacity-100"
-                          onClick={() => embedUrl && enterFocusMode(embedUrl)}
+                          onClick={() => enterFocusMode(judoThrow.videos[0].url)}
                         >
                           <Maximize2 className="w-4 h-4" />
                         </Button>
@@ -126,19 +119,13 @@ export default function BeforeCompetition() {
             </h2>
             <div className="grid gap-6 sm:grid-cols-2">
               {warmupVideos.map((video) => {
-                const embedUrl = getYouTubeEmbedUrl(video.url);
                 return (
                   <div key={video.id} className="card-universe overflow-hidden">
-                    <div className="aspect-video bg-muted">
-                      {embedUrl && (
-                        <iframe
-                          src={embedUrl}
-                          title={video.title}
-                          className="w-full h-full"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                          allowFullScreen
-                        />
-                      )}
+                    <div className="bg-muted p-4">
+                      <VideoViewer
+                        title={video.title}
+                        video={{ id: video.id, url: video.url, type: 'youtube', title: video.title }}
+                      />
                     </div>
                     <div className="p-4">
                       <h3 className="font-semibold text-foreground">{video.title}</h3>
@@ -166,13 +153,10 @@ export default function BeforeCompetition() {
             >
               <X className="w-5 h-5" />
             </Button>
-            <div className="aspect-video rounded-2xl overflow-hidden shadow-modal">
-              <iframe
-                src={focusVideoUrl}
+            <div className="rounded-2xl overflow-hidden shadow-modal bg-card p-4">
+              <VideoViewer
                 title="Focus Mode Video"
-                className="w-full h-full"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
+                video={{ id: 'focus-video', url: focusVideoUrl, type: 'youtube' }}
               />
             </div>
           </div>

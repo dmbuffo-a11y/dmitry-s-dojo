@@ -1,6 +1,6 @@
 import { TrendingUp, RefreshCw } from 'lucide-react';
 import { Layout } from '@/components/Layout';
-import { getYouTubeEmbedUrl } from '@/types/judo';
+import { VideoViewer } from '@/components/VideoViewer';
 
 // Trending throws - simulated monthly update
 // In a real app, this would pull from YouTube API or curated sources
@@ -74,8 +74,6 @@ export default function TrendingNow() {
         {/* Trending Grid */}
         <div className="space-y-8 max-w-4xl mx-auto">
           {trendingThrows.map((throwItem, index) => {
-            const embedUrl = getYouTubeEmbedUrl(throwItem.videoUrl);
-            
             return (
               <div 
                 key={throwItem.id}
@@ -89,16 +87,16 @@ export default function TrendingNow() {
                   </div>
 
                   {/* Video */}
-                  <div className="aspect-video md:w-80 shrink-0 bg-muted">
-                    {embedUrl && (
-                      <iframe
-                        src={embedUrl}
-                        title={throwItem.name}
-                        className="w-full h-full"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                      />
-                    )}
+                  <div className="md:w-96 shrink-0 bg-muted p-4">
+                    <VideoViewer
+                      title={throwItem.name}
+                      video={{
+                        id: `${throwItem.id}-video`,
+                        url: throwItem.videoUrl,
+                        type: 'youtube',
+                        title: throwItem.name,
+                      }}
+                    />
                   </div>
 
                   {/* Info */}
