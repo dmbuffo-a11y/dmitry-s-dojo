@@ -1,38 +1,44 @@
-import { Swords, Target, Wrench, MapPin, TrendingUp } from 'lucide-react';
 import { Layout } from '@/components/Layout';
 import { Hero } from '@/components/Hero';
 import { NavigationCard } from '@/components/NavigationCard';
+
+// Import illustrated icons
+import myThrowsIcon from '@/assets/icons/my-throws-icon.png';
+import beforeCompetitionIcon from '@/assets/icons/before-competition-icon.png';
+import workInProgressIcon from '@/assets/icons/work-in-progress-icon.png';
+import londonJudoIcon from '@/assets/icons/london-judo-icon.png';
+import trendingIcon from '@/assets/icons/trending-icon.png';
 
 const sections = [
   {
     to: '/my-throws',
     title: 'My Throws',
     description: 'Your personal library of throws. Videos, techniques, and the moves that define your game.',
-    icon: Swords,
+    image: myThrowsIcon,
   },
   {
     to: '/before-competition',
     title: 'Before Competition',
     description: 'Mental focus and key techniques. Review what matters before stepping on the mat.',
-    icon: Target,
+    image: beforeCompetitionIcon,
   },
   {
     to: '/work-in-progress',
     title: 'Work in Progress',
     description: 'Experimental throws and ideas. The techniques you\'re developing and exploring.',
-    icon: Wrench,
+    image: workInProgressIcon,
   },
   {
     to: '/london-judo',
     title: 'London Judo',
     description: 'Upcoming competitions and events in London and the UK. Stay connected to the local scene.',
-    icon: MapPin,
+    image: londonJudoIcon,
   },
   {
     to: '/trending',
     title: 'Trending Now',
     description: 'Popular throws this month. What the judo world is watching and practicing.',
-    icon: TrendingUp,
+    image: trendingIcon,
   },
 ];
 

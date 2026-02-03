@@ -2,12 +2,15 @@ import heroImage from '@/assets/hero-judo-illustration.jpg';
 
 export function Hero() {
   return (
-    <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
       {/* Background illustration */}
       <div 
-        className="absolute inset-0 bg-cover bg-center opacity-30"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40"
         style={{ backgroundImage: `url(${heroImage})` }}
       />
+      
+      {/* Animated gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-transparent to-background" />
       
       {/* Gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/20 to-background" />
