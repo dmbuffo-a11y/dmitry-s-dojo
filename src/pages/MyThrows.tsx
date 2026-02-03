@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { RefreshCw } from 'lucide-react';
 import { Layout } from '@/components/Layout';
 import { ThrowCard } from '@/components/ThrowCard';
 import { ThrowDetail } from '@/components/ThrowDetail';
@@ -6,9 +7,11 @@ import { AddThrowModal } from '@/components/AddThrowModal';
 import { ThrowSearch } from '@/components/ThrowSearch';
 import { useThrows } from '@/hooks/useThrows';
 import { JudoThrow } from '@/types/judo';
+import { Button } from '@/components/ui/button';
+import { toast } from 'sonner';
 
 export default function MyThrows() {
-  const { myThrows, addThrow, isLoading } = useThrows();
+  const { myThrows, addThrow, isLoading, refreshVideosFromDatabase } = useThrows();
   const [selectedThrow, setSelectedThrow] = useState<JudoThrow | null>(null);
 
   return (
@@ -24,10 +27,22 @@ export default function MyThrows() {
               Your personal technique library
             </p>
           </div>
-          <AddThrowModal onAdd={addThrow} />
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                refreshVideosFromDatabase();
+                toast.success('Видео обновлены из базы Kodokan');
+              }}
+              className="gap-2"
+            >
+              <RefreshCw className="h-4 w-4" />
+              Обновить видео
+            </Button>
+            <AddThrowModal onAdd={addThrow} />
+          </div>
         </div>
-
-        {/* Search */}
         <div className="mb-10 animate-fade-in" style={{ animationDelay: '100ms' }}>
           <ThrowSearch existingThrows={myThrows} onAddThrow={addThrow} />
         </div>
