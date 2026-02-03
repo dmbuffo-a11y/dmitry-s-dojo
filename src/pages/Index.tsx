@@ -13,12 +13,6 @@ import analysisIcon from '@/assets/icons/analysis-icon.png';
 
 const sections = [
   {
-    to: '/my-throws',
-    title: 'My Throws',
-    description: 'Your personal library of throws. Videos, techniques, and the moves that define your game.',
-    image: myThrowsIcon,
-  },
-  {
     to: '/my-videos',
     title: 'My Videos',
     description: 'Твои лучшие моменты и любимые видео. Собственные записи и вдохновляющие клипы.',
@@ -53,6 +47,12 @@ const sections = [
     title: 'Trending Now',
     description: 'Popular throws this month. What the judo world is watching and practicing.',
     image: trendingIcon,
+  },
+  {
+    to: '/my-throws',
+    title: 'My Throws',
+    description: 'Your personal library of throws. Videos, techniques, and the moves that define your game.',
+    image: myThrowsIcon,
   },
 ];
 
