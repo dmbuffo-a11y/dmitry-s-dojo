@@ -4,46 +4,47 @@ import { VideoViewer } from '@/components/VideoViewer';
 
 // Trending throws - curated from official Kodokan and IJF channels
 // These are verified working videos from authoritative judo sources
+// Trending throws - curated from embed-friendly judo channels
 const trendingThrows = [
   {
     id: 't1',
     name: 'Uchi Mata',
     kanji: '内股',
-    videoUrl: 'https://www.youtube.com/watch?v=gLfPwitVkec',
+    videoUrl: 'https://www.youtube.com/watch?v=sR4ZVGPd_D4',
     views: '1.2M',
-    source: 'Kodokan Official',
+    source: 'Efficient Judo',
   },
   {
     id: 't2',
     name: 'Seoi Nage',
     kanji: '背負投',
-    videoUrl: 'https://www.youtube.com/watch?v=Z2lHVVPKzYU',
+    videoUrl: 'https://www.youtube.com/watch?v=6zzC3hAgc70',
     views: '980K',
-    source: 'Kodokan Official',
+    source: 'Shintaro Higashi',
   },
   {
     id: 't3',
     name: 'Osoto Gari',
     kanji: '大外刈',
-    videoUrl: 'https://www.youtube.com/watch?v=NxrIYQ1Kp_I',
+    videoUrl: 'https://www.youtube.com/watch?v=TLp0EuEf2I0',
     views: '850K',
-    source: 'Kodokan Official',
+    source: 'Shintaro Higashi',
   },
   {
     id: 't4',
     name: 'Harai Goshi',
     kanji: '払腰',
-    videoUrl: 'https://www.youtube.com/watch?v=fymPbykWfB4',
+    videoUrl: 'https://www.youtube.com/watch?v=sR4ZVGPd_D4',
     views: '720K',
-    source: 'Kodokan Official',
+    source: 'Efficient Judo',
   },
   {
     id: 't5',
     name: 'Ippon Seoi Nage',
     kanji: '一本背負投',
-    videoUrl: 'https://www.youtube.com/watch?v=yaov8oLHMEA',
+    videoUrl: 'https://www.youtube.com/watch?v=R8xMazPVBHg',
     views: '650K',
-    source: 'Superstar Judo',
+    source: 'Judo Tutorial',
   },
 ];
 
