@@ -33,6 +33,8 @@ export interface FocusItem {
   videoUrl?: string;
 }
 
+export type YouTubeEmbedProvider = 'youtube' | 'youtube-nocookie' | 'piped' | 'invidious';
+
 // Helper to extract YouTube video ID
 export const extractYouTubeId = (url: string): string | null => {
   // Prefer URL parsing (handles youtu.be, shorts, extra params, etc.)
@@ -79,9 +81,36 @@ export const extractYouTubeId = (url: string): string | null => {
 };
 
 // Helper to generate YouTube embed URL
-export const getYouTubeEmbedUrl = (url: string): string | null => {
+export const getYouTubeEmbedUrl = (
+  url: string,
+  provider: YouTubeEmbedProvider = 'youtube-nocookie'
+): string | null => {
   const videoId = extractYouTubeId(url);
-  return videoId ? `https://www.youtube.com/embed/${videoId}` : null;
+  if (!videoId) return null;
+
+  // These params improve compatibility in embedded contexts.
+  const origin =
+    typeof window !== 'undefined' && window.location?.origin ? window.location.origin : undefined;
+  const ytParams = new URLSearchParams({
+    rel: '0',
+    modestbranding: '1',
+    playsinline: '1',
+    // Some environments behave better with origin explicitly set.
+    ...(origin ? { origin } : {}),
+  });
+
+  switch (provider) {
+    case 'youtube':
+      return `https://www.youtube.com/embed/${videoId}?${ytParams.toString()}`;
+    case 'youtube-nocookie':
+      return `https://www.youtube-nocookie.com/embed/${videoId}?${ytParams.toString()}`;
+    case 'piped':
+      return `https://piped.video/embed/${videoId}`;
+    case 'invidious':
+      return `https://yewtu.be/embed/${videoId}`;
+    default:
+      return `https://www.youtube-nocookie.com/embed/${videoId}?${ytParams.toString()}`;
+  }
 };
 
 export const getYouTubeThumbnailUrl = (url: string, quality: 'mqdefault' | 'hqdefault' = 'mqdefault'): string | null => {

@@ -2,6 +2,7 @@ import { X, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { getYouTubeEmbedUrl } from '@/types/judo';
+import { useVideoEmbedProvider } from '@/hooks/useVideoEmbedProvider';
 
 interface VideoPlayerModalProps {
   url: string;
@@ -11,7 +12,8 @@ interface VideoPlayerModalProps {
 }
 
 export function VideoPlayerModal({ url, title, isOpen, onClose }: VideoPlayerModalProps) {
-  const embedUrl = getYouTubeEmbedUrl(url);
+  const { provider } = useVideoEmbedProvider();
+  const embedUrl = getYouTubeEmbedUrl(url, provider);
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
@@ -27,6 +29,8 @@ export function VideoPlayerModal({ url, title, isOpen, onClose }: VideoPlayerMod
                 src={embedUrl}
                 title={title}
                 className="w-full h-full"
+                loading="lazy"
+                referrerPolicy="strict-origin-when-cross-origin"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               />

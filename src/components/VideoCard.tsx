@@ -1,7 +1,7 @@
 import { Play, Heart, Trash2, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { PersonalVideo } from '@/hooks/useMyVideos';
-import { getYouTubeThumbnailUrl, getYouTubeEmbedUrl } from '@/types/judo';
+import { getYouTubeThumbnailUrl } from '@/types/judo';
 import { cn } from '@/lib/utils';
 
 interface VideoCardProps {

@@ -1,7 +1,8 @@
 import { ExternalLink } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { VideoItem, getYouTubeEmbedUrl } from "@/types/judo";
+import { extractYouTubeId, type YouTubeEmbedProvider, VideoItem, getYouTubeEmbedUrl } from "@/types/judo";
+import { useVideoEmbedProvider } from "@/hooks/useVideoEmbedProvider";
 
 interface VideoViewerProps {
   video: VideoItem;
@@ -24,17 +25,31 @@ export function VideoViewer({ video, title }: VideoViewerProps) {
     );
   }
 
-  const embedUrl = getYouTubeEmbedUrl(video.url);
+  const { provider, setProvider } = useVideoEmbedProvider();
+  const videoId = extractYouTubeId(video.url);
+
+  const embedUrl = getYouTubeEmbedUrl(video.url, provider);
   const openUrl = video.url;
+  const pipedUrl = videoId ? `https://piped.video/watch?v=${videoId}` : openUrl;
+  const invidiousUrl = videoId ? `https://yewtu.be/watch?v=${videoId}` : openUrl;
+
+  const providerOptions: Array<{ key: YouTubeEmbedProvider; label: string }> = [
+    { key: "youtube-nocookie", label: "YouTube" },
+    { key: "piped", label: "Piped" },
+    { key: "invidious", label: "Invidious" },
+  ];
 
   return (
     <div className="space-y-3">
       <div className="aspect-video rounded-xl overflow-hidden bg-muted">
         {embedUrl ? (
           <iframe
+            key={provider}
             src={embedUrl}
             title={title}
             className="w-full h-full"
+            loading="lazy"
+            referrerPolicy="strict-origin-when-cross-origin"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
           />
@@ -51,14 +66,48 @@ export function VideoViewer({ video, title }: VideoViewerProps) {
         )}
       </div>
 
+      {/* Provider switch (persists in localStorage). Helps when videos are playable on YouTube, but blocked in embeds. */}
+      <div className="flex flex-col gap-2">
+        <p className="text-xs text-muted-foreground">
+          Если видишь “Video unavailable” — переключи источник (запомнится для всех видео).
+        </p>
+        <div className="flex flex-wrap gap-2">
+          {providerOptions.map((opt) => (
+            <Button
+              key={opt.key}
+              type="button"
+              size="sm"
+              variant={provider === opt.key ? "default" : "outline"}
+              onClick={() => setProvider(opt.key)}
+            >
+              {opt.label}
+            </Button>
+          ))}
+        </div>
+      </div>
+
       {/* Always provide a reliable way to open the original link */}
       <div className="flex justify-end">
-        <Button asChild variant="link" className="h-auto p-0 gap-2">
-          <a href={openUrl} target="_blank" rel="noreferrer">
-            <ExternalLink className="w-4 h-4" />
-            Открыть в YouTube
-          </a>
-        </Button>
+        <div className="flex items-center gap-4">
+          <Button asChild variant="link" className="h-auto p-0 gap-2">
+            <a href={openUrl} target="_blank" rel="noreferrer">
+              <ExternalLink className="w-4 h-4" />
+              Открыть в YouTube
+            </a>
+          </Button>
+          <Button asChild variant="link" className="h-auto p-0 gap-2">
+            <a href={pipedUrl} target="_blank" rel="noreferrer">
+              <ExternalLink className="w-4 h-4" />
+              Piped
+            </a>
+          </Button>
+          <Button asChild variant="link" className="h-auto p-0 gap-2">
+            <a href={invidiousUrl} target="_blank" rel="noreferrer">
+              <ExternalLink className="w-4 h-4" />
+              Invidious
+            </a>
+          </Button>
+        </div>
       </div>
     </div>
   );
