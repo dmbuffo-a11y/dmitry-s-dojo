@@ -52,15 +52,27 @@ export function useThrows() {
   // Load throws from localStorage on mount
   useEffect(() => {
     const stored = localStorage.getItem(THROWS_STORAGE_KEY);
-    if (stored) {
-      try {
-        setThrows(JSON.parse(stored));
-      } catch {
-        setThrows(defaultThrows);
-      }
-    } else {
+    const persistDefaults = () => {
       setThrows(defaultThrows);
       localStorage.setItem(THROWS_STORAGE_KEY, JSON.stringify(defaultThrows));
+    };
+
+    if (!stored) {
+      persistDefaults();
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      const parsed = JSON.parse(stored);
+      // If storage is corrupted or empty ("[]"), fall back to defaults.
+      if (!Array.isArray(parsed) || parsed.length === 0) {
+        persistDefaults();
+      } else {
+        setThrows(parsed);
+      }
+    } catch {
+      persistDefaults();
     }
     setIsLoading(false);
   }, []);

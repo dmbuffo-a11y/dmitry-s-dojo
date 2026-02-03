@@ -1,7 +1,8 @@
 import { X } from 'lucide-react';
-import { JudoThrow, getYouTubeEmbedUrl } from '@/types/judo';
+import { JudoThrow } from '@/types/judo';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { VideoViewer } from '@/components/VideoViewer';
 
 interface ThrowDetailProps {
   judoThrow: JudoThrow | null;
@@ -38,7 +39,6 @@ export function ThrowDetail({ judoThrow, isOpen, onClose, onMoveToMyThrows }: Th
         <div className="space-y-6 mt-6">
           {judoThrow.videos.length > 0 ? (
             judoThrow.videos.map((video, index) => {
-              const embedUrl = video.type === 'youtube' ? getYouTubeEmbedUrl(video.url) : video.url;
               return (
                 <div key={video.id} className="space-y-2">
                   {video.title && (
@@ -46,21 +46,7 @@ export function ThrowDetail({ judoThrow, isOpen, onClose, onMoveToMyThrows }: Th
                       {video.title}
                     </h4>
                   )}
-                  <div className="aspect-video rounded-xl overflow-hidden bg-muted">
-                    {embedUrl ? (
-                      <iframe
-                        src={embedUrl}
-                        title={video.title || `Video ${index + 1}`}
-                        className="w-full h-full"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center text-muted-foreground">
-                        Video unavailable
-                      </div>
-                    )}
-                  </div>
+                  <VideoViewer video={video} title={video.title || `Video ${index + 1}`} />
                 </div>
               );
             })
