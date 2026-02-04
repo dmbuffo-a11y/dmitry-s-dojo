@@ -20,8 +20,8 @@ const sections = [
   },
   {
     to: '/analysis',
-    title: 'Разбор техники',
-    description: 'Замедляй, останавливай, изучай каждое движение покадрово.',
+    title: 'Technique Analysis',
+    description: 'Slow down, pause, and study every movement frame by frame.',
     image: analysisIcon,
   },
   {

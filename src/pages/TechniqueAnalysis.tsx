@@ -14,7 +14,7 @@ export default function TechniqueAnalysis() {
         {/* Back button */}
         <Link to="/" className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-8">
           <ArrowLeft className="w-4 h-4" />
-          Назад
+          Back
         </Link>
 
         {/* Header */}
@@ -24,10 +24,10 @@ export default function TechniqueAnalysis() {
             <span className="text-sm font-medium text-accent-foreground">Frame-by-Frame</span>
           </div>
           <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
-            Разбор техники
+            Technique Analysis
           </h1>
           <p className="text-muted-foreground">
-            Открой видео на YouTube для детального просмотра
+            Open videos on YouTube for detailed frame-by-frame review
           </p>
         </div>
 
@@ -63,10 +63,10 @@ export default function TechniqueAnalysis() {
         ) : (
           <div className="text-center py-24">
             <p className="text-xl text-muted-foreground mb-2">
-              Нет бросков с видео
+              No throws with videos
             </p>
             <p className="text-muted-foreground">
-              Добавь броски с YouTube в My Throws
+              Add throws with YouTube links in My Throws
             </p>
           </div>
         )}
@@ -74,7 +74,7 @@ export default function TechniqueAnalysis() {
         {/* Tip */}
         <div className="mt-8 p-4 rounded-lg bg-accent/30 max-w-xl">
           <p className="text-sm text-foreground">
-            💡 На YouTube можно использовать клавиши <kbd className="px-1.5 py-0.5 rounded bg-muted text-xs">,</kbd> и <kbd className="px-1.5 py-0.5 rounded bg-muted text-xs">.</kbd> для покадрового просмотра
+            💡 On YouTube, use <kbd className="px-1.5 py-0.5 rounded bg-muted text-xs">,</kbd> and <kbd className="px-1.5 py-0.5 rounded bg-muted text-xs">.</kbd> keys for frame-by-frame viewing
           </p>
         </div>
       </div>
