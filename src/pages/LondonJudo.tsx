@@ -1,9 +1,9 @@
-import { MapPin, ExternalLink, Calendar } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { MapPin, ExternalLink, Calendar, ArrowLeft } from 'lucide-react';
 import { Layout } from '@/components/Layout';
 import { Button } from '@/components/ui/button';
 import { Competition } from '@/types/judo';
 
-// Sample competitions - structured for future API integration
 const upcomingCompetitions: Competition[] = [
   {
     id: '1',
@@ -60,47 +60,52 @@ function getDaysUntil(dateString: string) {
 export default function LondonJudo() {
   return (
     <Layout>
-      <div className="container mx-auto px-4 md:px-6 py-12 md:py-16">
+      <div className="container mx-auto px-4 md:px-6 py-8 md:py-12">
+        {/* Back button */}
+        <Link to="/" className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-8">
+          <ArrowLeft className="w-4 h-4" />
+          Назад
+        </Link>
+
         {/* Header */}
-        <div className="text-center mb-16 animate-fade-in">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent mb-6">
+        <div className="mb-8">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent mb-4">
             <MapPin className="w-4 h-4 text-accent-foreground" />
             <span className="text-sm font-medium text-accent-foreground">UK & London</span>
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
             London Judo
           </h1>
-          <p className="text-lg text-muted-foreground max-w-xl mx-auto">
-            Upcoming competitions and events in the UK
+          <p className="text-muted-foreground">
+            Upcoming competitions and events
           </p>
         </div>
 
         {/* Competitions List */}
-        <div className="max-w-3xl mx-auto space-y-6">
-          {upcomingCompetitions.map((competition, index) => {
+        <div className="max-w-2xl space-y-3">
+          {upcomingCompetitions.map((competition) => {
             const daysUntil = getDaysUntil(competition.date);
             const isPast = daysUntil < 0;
 
             return (
               <div 
                 key={competition.id}
-                className="card-universe p-6 animate-fade-in-up"
-                style={{ animationDelay: `${index * 100}ms` }}
+                className="p-4 rounded-lg bg-card"
               >
-                <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
+                <div className="flex flex-col md:flex-row md:items-start justify-between gap-3">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
-                      <h3 className="text-xl font-semibold text-foreground">
+                      <h3 className="font-semibold text-foreground">
                         {competition.name}
                       </h3>
                       {!isPast && daysUntil <= 30 && (
-                        <span className="badge-trending">
+                        <span className="text-xs px-2 py-0.5 rounded-full bg-primary text-primary-foreground">
                           {daysUntil === 0 ? 'Today!' : `${daysUntil} days`}
                         </span>
                       )}
                     </div>
                     
-                    <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-3">
+                    <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground mb-2">
                       <span className="flex items-center gap-1.5">
                         <Calendar className="w-4 h-4" />
                         {formatDate(competition.date)}
@@ -112,7 +117,7 @@ export default function LondonJudo() {
                     </div>
 
                     {competition.description && (
-                      <p className="text-muted-foreground">
+                      <p className="text-sm text-muted-foreground">
                         {competition.description}
                       </p>
                     )}
@@ -120,7 +125,7 @@ export default function LondonJudo() {
 
                   {competition.externalUrl && (
                     <Button
-                      variant="outline"
+                      variant="ghost"
                       size="sm"
                       className="gap-2 shrink-0"
                       asChild
@@ -130,8 +135,7 @@ export default function LondonJudo() {
                         target="_blank" 
                         rel="noopener noreferrer"
                       >
-                        Details
-                        <ExternalLink className="w-3.5 h-3.5" />
+                        <ExternalLink className="w-4 h-4" />
                       </a>
                     </Button>
                   )}
@@ -142,18 +146,16 @@ export default function LondonJudo() {
         </div>
 
         {/* Footer note */}
-        <div className="text-center mt-16 animate-fade-in" style={{ animationDelay: '500ms' }}>
-          <p className="text-sm text-muted-foreground">
-            Event data curated from{' '}
-            <a 
-              href="https://www.britishjudo.org.uk/events/" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-primary hover:underline"
-            >
-              British Judo
-            </a>
-          </p>
+        <div className="mt-8 text-sm text-muted-foreground">
+          Event data from{' '}
+          <a 
+            href="https://www.britishjudo.org.uk/events/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-primary hover:underline"
+          >
+            British Judo
+          </a>
         </div>
       </div>
     </Layout>

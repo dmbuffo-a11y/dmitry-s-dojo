@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Wrench, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Wrench, ArrowRight, ArrowLeft } from 'lucide-react';
 import { Layout } from '@/components/Layout';
 import { ThrowCard } from '@/components/ThrowCard';
 import { ThrowDetail } from '@/components/ThrowDetail';
@@ -20,30 +21,36 @@ export default function WorkInProgress() {
 
   return (
     <Layout>
-      <div className="container mx-auto px-4 md:px-6 py-12 md:py-16">
+      <div className="container mx-auto px-4 md:px-6 py-8 md:py-12">
+        {/* Back button */}
+        <Link to="/" className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-8">
+          <ArrowLeft className="w-4 h-4" />
+          Назад
+        </Link>
+
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-12 animate-fade-in">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent mb-4">
               <Wrench className="w-4 h-4 text-accent-foreground" />
               <span className="text-sm font-medium text-accent-foreground">Experimental</span>
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-2">
+            <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
               Work in Progress
             </h1>
-            <p className="text-lg text-muted-foreground">
-              Throws you're developing. Ideas not yet mastered.
+            <p className="text-muted-foreground">
+              Броски, которые ты изучаешь
             </p>
           </div>
           <AddThrowModal onAdd={addWipThrow} isWip />
         </div>
 
         {/* Info Card */}
-        <div className="card-universe p-6 mb-12 bg-accent/30 animate-fade-in-up">
+        <div className="p-4 rounded-lg bg-accent/30 mb-8 max-w-xl">
           <div className="flex items-center gap-3">
-            <ArrowRight className="w-5 h-5 text-accent-foreground" />
+            <ArrowRight className="w-5 h-5 text-accent-foreground shrink-0" />
             <p className="text-sm text-foreground">
-              When a technique is ready, you can move it to <strong>My Throws</strong> from the detail view.
+              Когда техника освоена, перемести её в <strong>My Throws</strong>
             </p>
           </div>
         </div>
@@ -57,27 +64,22 @@ export default function WorkInProgress() {
           </div>
         ) : wipThrows.length > 0 ? (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {wipThrows.map((judoThrow, index) => (
-              <div 
-                key={judoThrow.id} 
-                className="animate-fade-in-up"
-                style={{ animationDelay: `${index * 50}ms` }}
-              >
-                <ThrowCard
-                  judoThrow={judoThrow}
-                  onClick={() => setSelectedThrow(judoThrow)}
-                  isWip
-                />
-              </div>
+            {wipThrows.map((judoThrow) => (
+              <ThrowCard
+                key={judoThrow.id}
+                judoThrow={judoThrow}
+                onClick={() => setSelectedThrow(judoThrow)}
+                isWip
+              />
             ))}
           </div>
         ) : (
-          <div className="text-center py-24 animate-fade-in">
+          <div className="text-center py-24">
             <p className="text-xl text-muted-foreground mb-2">
-              No works in progress yet.
+              Пока ничего нет
             </p>
             <p className="text-muted-foreground mb-6">
-              Add throws you're experimenting with.
+              Добавь броски, с которыми экспериментируешь
             </p>
             <AddThrowModal onAdd={addWipThrow} isWip />
           </div>

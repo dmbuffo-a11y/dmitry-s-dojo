@@ -1,10 +1,9 @@
-import { TrendingUp, RefreshCw } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { ArrowLeft, TrendingUp, ExternalLink } from 'lucide-react';
 import { Layout } from '@/components/Layout';
-import { VideoViewer } from '@/components/VideoViewer';
+import { Button } from '@/components/ui/button';
+import { normalizeUrl } from '@/lib/url';
 
-// Trending throws - curated from official Kodokan and IJF channels
-// These are verified working videos from authoritative judo sources
-// Trending throws - curated from embed-friendly judo channels
 const trendingThrows = [
   {
     id: 't1',
@@ -48,92 +47,53 @@ const trendingThrows = [
   },
 ];
 
-const lastUpdated = 'February 2026';
-
 export default function TrendingNow() {
   return (
     <Layout>
-      <div className="container mx-auto px-4 md:px-6 py-12 md:py-16">
+      <div className="container mx-auto px-4 md:px-6 py-8 md:py-12">
+        {/* Back button */}
+        <Link to="/" className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-8">
+          <ArrowLeft className="w-4 h-4" />
+          Назад
+        </Link>
+
         {/* Header */}
-        <div className="text-center mb-16 animate-fade-in">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent mb-6">
+        <div className="mb-8">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent mb-4">
             <TrendingUp className="w-4 h-4 text-accent-foreground" />
-            <span className="text-sm font-medium text-accent-foreground">Monthly Update</span>
+            <span className="text-sm font-medium text-accent-foreground">Топ месяца</span>
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+          <h1 className="text-3xl md:text-4xl font-bold text-foreground">
             Trending Now
           </h1>
-          <p className="text-lg text-muted-foreground max-w-xl mx-auto mb-4">
-            Top judo throws this month
-          </p>
-          <div className="inline-flex items-center gap-2 text-sm text-muted-foreground">
-            <RefreshCw className="w-4 h-4" />
-            <span>Updated {lastUpdated}</span>
-          </div>
         </div>
 
-        {/* Trending Grid */}
-        <div className="space-y-8 max-w-4xl mx-auto">
-          {trendingThrows.map((throwItem, index) => {
-            return (
-              <div 
-                key={throwItem.id}
-                className="card-universe overflow-hidden animate-fade-in-up"
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
-                <div className="flex flex-col md:flex-row">
-                  {/* Rank */}
-                  <div className="hidden md:flex w-20 shrink-0 items-center justify-center bg-accent text-accent-foreground">
-                    <span className="text-3xl font-bold">#{index + 1}</span>
-                  </div>
-
-                  {/* Video */}
-                  <div className="md:w-96 shrink-0 bg-muted p-4">
-                    <VideoViewer
-                      title={throwItem.name}
-                      video={{
-                        id: `${throwItem.id}-video`,
-                        url: throwItem.videoUrl,
-                        type: 'youtube',
-                        title: throwItem.name,
-                      }}
-                    />
-                  </div>
-
-                  {/* Info */}
-                  <div className="flex-1 p-6">
-                    <div className="flex items-start justify-between gap-4">
-                      <div>
-                        <span className="md:hidden badge-trending mb-2 inline-block">
-                          #{index + 1}
-                        </span>
-                        <h3 className="text-2xl font-semibold text-foreground mb-1">
-                          {throwItem.name}
-                        </h3>
-                        {throwItem.kanji && (
-                          <p className="text-lg text-muted-foreground mb-3">
-                            {throwItem.kanji}
-                          </p>
-                        )}
-                        <div className="flex flex-wrap gap-3 text-sm text-muted-foreground">
-                          <span>{throwItem.views} views</span>
-                          <span>•</span>
-                          <span>{throwItem.source}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+        {/* Video list */}
+        <div className="space-y-3 max-w-2xl">
+          {trendingThrows.map((item, index) => (
+            <a
+              key={item.id}
+              href={normalizeUrl(item.videoUrl)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-between p-4 rounded-lg bg-card hover:bg-muted transition-colors group"
+            >
+              <div className="flex items-center gap-4">
+                <span className="text-2xl font-bold text-muted-foreground w-8">
+                  {index + 1}
+                </span>
+                <div>
+                  <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors">
+                    {item.name}
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    {item.kanji} • {item.source}
+                  </p>
                 </div>
               </div>
-            );
-          })}
-        </div>
-
-        {/* Footer */}
-        <div className="text-center mt-16 animate-fade-in" style={{ animationDelay: '600ms' }}>
-          <p className="text-sm text-muted-foreground">
-            Curated from popular judo content across the web
-          </p>
+              <ExternalLink className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+            </a>
+          ))}
         </div>
       </div>
     </Layout>

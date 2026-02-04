@@ -1,8 +1,8 @@
-import { X } from 'lucide-react';
+import { X, ExternalLink } from 'lucide-react';
 import { JudoThrow } from '@/types/judo';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { VideoViewer } from '@/components/VideoViewer';
+import { normalizeUrl } from '@/lib/url';
 
 interface ThrowDetailProps {
   judoThrow: JudoThrow | null;
@@ -16,14 +16,14 @@ export function ThrowDetail({ judoThrow, isOpen, onClose, onMoveToMyThrows }: Th
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-card border-0 shadow-modal">
+      <DialogContent className="max-w-lg bg-card border-0 shadow-modal">
         <DialogHeader className="flex flex-row items-start justify-between">
           <div>
-            <DialogTitle className="text-3xl font-bold text-foreground">
+            <DialogTitle className="text-2xl font-bold text-foreground">
               {judoThrow.name}
             </DialogTitle>
             {judoThrow.kanji && (
-              <p className="text-xl text-muted-foreground mt-1">{judoThrow.kanji}</p>
+              <p className="text-lg text-muted-foreground mt-1">{judoThrow.kanji}</p>
             )}
           </div>
           <Button
@@ -36,23 +36,25 @@ export function ThrowDetail({ judoThrow, isOpen, onClose, onMoveToMyThrows }: Th
           </Button>
         </DialogHeader>
 
-        <div className="space-y-6 mt-6">
+        <div className="space-y-3 mt-4">
           {judoThrow.videos.length > 0 ? (
-            judoThrow.videos.map((video, index) => {
-              return (
-                <div key={video.id} className="space-y-2">
-                  {video.title && (
-                    <h4 className="text-sm font-medium text-muted-foreground">
-                      {video.title}
-                    </h4>
-                  )}
-                  <VideoViewer video={video} title={video.title || `Video ${index + 1}`} />
-                </div>
-              );
-            })
+            judoThrow.videos.map((video, index) => (
+              <a
+                key={video.id}
+                href={normalizeUrl(video.url)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between p-4 rounded-lg bg-muted hover:bg-muted/80 transition-colors group"
+              >
+                <span className="text-foreground group-hover:text-primary transition-colors">
+                  {video.title || `Видео ${index + 1}`}
+                </span>
+                <ExternalLink className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+              </a>
+            ))
           ) : (
-            <div className="text-center py-12 text-muted-foreground">
-              <p>No videos added yet.</p>
+            <div className="text-center py-8 text-muted-foreground">
+              <p>Видео пока нет.</p>
             </div>
           )}
         </div>
@@ -63,7 +65,7 @@ export function ThrowDetail({ judoThrow, isOpen, onClose, onMoveToMyThrows }: Th
               onClick={onMoveToMyThrows}
               className="w-full bg-primary hover:bg-primary/90"
             >
-              Move to My Throws
+              Перенести в My Throws
             </Button>
           </div>
         )}

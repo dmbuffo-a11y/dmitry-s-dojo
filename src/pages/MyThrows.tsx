@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { RefreshCw } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { RefreshCw, ArrowLeft } from 'lucide-react';
 import { Layout } from '@/components/Layout';
 import { ThrowCard } from '@/components/ThrowCard';
 import { ThrowDetail } from '@/components/ThrowDetail';
@@ -16,15 +17,21 @@ export default function MyThrows() {
 
   return (
     <Layout>
-      <div className="container mx-auto px-4 md:px-6 py-12 md:py-16">
+      <div className="container mx-auto px-4 md:px-6 py-8 md:py-12">
+        {/* Back button */}
+        <Link to="/" className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-8">
+          <ArrowLeft className="w-4 h-4" />
+          Назад
+        </Link>
+
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 animate-fade-in">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
           <div>
-            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-2">
+            <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
               My Throws
             </h1>
-            <p className="text-lg text-muted-foreground">
-              Your personal technique library
+            <p className="text-muted-foreground">
+              Твоя библиотека техник
             </p>
           </div>
           <div className="flex gap-2">
@@ -33,17 +40,18 @@ export default function MyThrows() {
               size="sm"
               onClick={() => {
                 refreshVideosFromDatabase();
-                toast.success('Видео обновлены из базы Kodokan');
+                toast.success('Видео обновлены');
               }}
               className="gap-2"
             >
               <RefreshCw className="h-4 w-4" />
-              Обновить видео
+              Обновить
             </Button>
             <AddThrowModal onAdd={addThrow} />
           </div>
         </div>
-        <div className="mb-10 animate-fade-in" style={{ animationDelay: '100ms' }}>
+
+        <div className="mb-8">
           <ThrowSearch existingThrows={myThrows} onAddThrow={addThrow} />
         </div>
 
@@ -56,23 +64,18 @@ export default function MyThrows() {
           </div>
         ) : myThrows.length > 0 ? (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {myThrows.map((judoThrow, index) => (
-              <div 
-                key={judoThrow.id} 
-                className="animate-fade-in-up"
-                style={{ animationDelay: `${index * 50}ms` }}
-              >
-                <ThrowCard
-                  judoThrow={judoThrow}
-                  onClick={() => setSelectedThrow(judoThrow)}
-                />
-              </div>
+            {myThrows.map((judoThrow) => (
+              <ThrowCard
+                key={judoThrow.id}
+                judoThrow={judoThrow}
+                onClick={() => setSelectedThrow(judoThrow)}
+              />
             ))}
           </div>
         ) : (
-          <div className="text-center py-24 animate-fade-in">
+          <div className="text-center py-24">
             <p className="text-xl text-muted-foreground mb-6">
-              No throws yet. Start building your library.
+              Нет бросков. Начни собирать библиотеку.
             </p>
             <AddThrowModal onAdd={addThrow} />
           </div>

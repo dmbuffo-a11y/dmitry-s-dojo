@@ -1,25 +1,28 @@
-import { Play, Heart, Trash2, ExternalLink } from 'lucide-react';
+import { Heart, Trash2, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { PersonalVideo } from '@/hooks/useMyVideos';
 import { getYouTubeThumbnailUrl } from '@/types/judo';
+import { normalizeUrl } from '@/lib/url';
 import { cn } from '@/lib/utils';
 
 interface VideoCardProps {
   video: PersonalVideo;
-  onPlay: () => void;
   onToggleFavorite: () => void;
   onDelete: () => void;
 }
 
-export function VideoCard({ video, onPlay, onToggleFavorite, onDelete }: VideoCardProps) {
+export function VideoCard({ video, onToggleFavorite, onDelete }: VideoCardProps) {
   const thumbnailUrl = getYouTubeThumbnailUrl(video.url, 'hqdefault');
+  const normalizedUrl = normalizeUrl(video.url);
 
   return (
     <div className="group card-universe overflow-hidden">
-      {/* Thumbnail */}
-      <button
-        onClick={onPlay}
-        className="relative w-full aspect-video bg-muted overflow-hidden"
+      {/* Thumbnail - links to YouTube */}
+      <a
+        href={normalizedUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="relative w-full aspect-video bg-muted overflow-hidden block"
       >
         {thumbnailUrl ? (
           <img
@@ -29,14 +32,14 @@ export function VideoCard({ video, onPlay, onToggleFavorite, onDelete }: VideoCa
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center bg-secondary">
-            <Play className="w-12 h-12 text-muted-foreground" />
+            <ExternalLink className="w-12 h-12 text-muted-foreground" />
           </div>
         )}
         
-        {/* Play overlay */}
+        {/* Overlay */}
         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
           <div className="w-16 h-16 rounded-full bg-primary/90 flex items-center justify-center">
-            <Play className="w-7 h-7 text-primary-foreground ml-1" fill="currentColor" />
+            <ExternalLink className="w-7 h-7 text-primary-foreground" />
           </div>
         </div>
 
@@ -46,7 +49,7 @@ export function VideoCard({ video, onPlay, onToggleFavorite, onDelete }: VideoCa
             <Heart className="w-4 h-4 text-destructive-foreground" fill="currentColor" />
           </div>
         )}
-      </button>
+      </a>
 
       {/* Info */}
       <div className="p-4">
@@ -77,13 +80,14 @@ export function VideoCard({ video, onPlay, onToggleFavorite, onDelete }: VideoCa
           </Button>
           
           <a
-            href={video.url}
+            href={normalizedUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="ml-auto"
           >
             <Button variant="ghost" size="sm" className="gap-1">
               <ExternalLink className="w-4 h-4" />
+              <span className="sr-only sm:not-sr-only">YouTube</span>
             </Button>
           </a>
           
