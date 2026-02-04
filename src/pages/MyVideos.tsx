@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { Heart, Film } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Heart, Film, ArrowLeft } from 'lucide-react';
 import { Layout } from '@/components/Layout';
 import { VideoCard } from '@/components/VideoCard';
 import { AddVideoModal } from '@/components/AddVideoModal';
-import { VideoPlayerModal } from '@/components/VideoPlayerModal';
-import { useMyVideos, PersonalVideo } from '@/hooks/useMyVideos';
+import { useMyVideos } from '@/hooks/useMyVideos';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -13,20 +13,25 @@ type FilterType = 'all' | 'favorites';
 export default function MyVideos() {
   const { videos, favorites, isLoading, addVideo, removeVideo, toggleFavorite } = useMyVideos();
   const [filter, setFilter] = useState<FilterType>('all');
-  const [selectedVideo, setSelectedVideo] = useState<PersonalVideo | null>(null);
 
   const displayedVideos = filter === 'favorites' ? favorites : videos;
 
   return (
     <Layout>
-      <div className="container mx-auto px-4 md:px-6 py-12 md:py-16">
+      <div className="container mx-auto px-4 md:px-6 py-8 md:py-12">
+        {/* Back button */}
+        <Link to="/" className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-8">
+          <ArrowLeft className="w-4 h-4" />
+          Назад
+        </Link>
+
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 animate-fade-in">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
           <div>
-            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-2">
+            <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
               My Videos
             </h1>
-            <p className="text-lg text-muted-foreground">
+            <p className="text-muted-foreground">
               Твои лучшие моменты и любимые видео
             </p>
           </div>
@@ -34,7 +39,7 @@ export default function MyVideos() {
         </div>
 
         {/* Filter */}
-        <div className="flex gap-2 mb-8 animate-fade-in" style={{ animationDelay: '100ms' }}>
+        <div className="flex gap-2 mb-8">
           <Button
             variant={filter === 'all' ? 'default' : 'outline'}
             size="sm"
@@ -64,23 +69,17 @@ export default function MyVideos() {
           </div>
         ) : displayedVideos.length > 0 ? (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {displayedVideos.map((video, index) => (
-              <div 
-                key={video.id} 
-                className="animate-fade-in-up"
-                style={{ animationDelay: `${index * 50}ms` }}
-              >
-                <VideoCard
-                  video={video}
-                  onPlay={() => setSelectedVideo(video)}
-                  onToggleFavorite={() => toggleFavorite(video.id)}
-                  onDelete={() => removeVideo(video.id)}
-                />
-              </div>
+            {displayedVideos.map((video) => (
+              <VideoCard
+                key={video.id}
+                video={video}
+                onToggleFavorite={() => toggleFavorite(video.id)}
+                onDelete={() => removeVideo(video.id)}
+              />
             ))}
           </div>
         ) : (
-          <div className="text-center py-24 animate-fade-in">
+          <div className="text-center py-24">
             <Film className="w-16 h-16 mx-auto text-muted-foreground/50 mb-4" />
             <p className="text-xl text-muted-foreground mb-6">
               {filter === 'favorites' 
@@ -91,16 +90,6 @@ export default function MyVideos() {
           </div>
         )}
       </div>
-
-      {/* Video Player Modal */}
-      {selectedVideo && (
-        <VideoPlayerModal
-          url={selectedVideo.url}
-          title={selectedVideo.title}
-          isOpen={!!selectedVideo}
-          onClose={() => setSelectedVideo(null)}
-        />
-      )}
     </Layout>
   );
 }

@@ -1,8 +1,7 @@
 import { X, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { getYouTubeEmbedUrl } from '@/types/judo';
-import { useVideoEmbedProvider } from '@/hooks/useVideoEmbedProvider';
+import { normalizeUrl } from '@/lib/url';
 
 interface VideoPlayerModalProps {
   url: string;
@@ -11,50 +10,35 @@ interface VideoPlayerModalProps {
   onClose: () => void;
 }
 
+/**
+ * Simple modal that shows video info and a button to open on YouTube.
+ * No iframe - just a clean external link.
+ */
 export function VideoPlayerModal({ url, title, isOpen, onClose }: VideoPlayerModalProps) {
-  const { provider } = useVideoEmbedProvider();
-  const embedUrl = getYouTubeEmbedUrl(url, provider);
+  const normalizedUrl = normalizeUrl(url);
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-w-4xl w-[95vw] bg-card border-0 shadow-modal p-0 overflow-hidden">
-        <DialogHeader className="p-4 pb-0">
+      <DialogContent className="max-w-md bg-card border-0 shadow-modal">
+        <DialogHeader>
           <DialogTitle className="text-xl font-bold pr-8">{title}</DialogTitle>
         </DialogHeader>
 
-        <div className="p-4 pt-2 space-y-3">
-          <div className="aspect-video rounded-xl overflow-hidden bg-muted">
-            {embedUrl ? (
-              <iframe
-                src={embedUrl}
-                title={title}
-                className="w-full h-full"
-                loading="lazy"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            ) : (
-              <div className="w-full h-full flex flex-col items-center justify-center gap-3 text-muted-foreground px-6 text-center">
-                <p>Не удалось встроить видео.</p>
-                <Button asChild variant="secondary" className="gap-2">
-                  <a href={url} target="_blank" rel="noreferrer">
-                    <ExternalLink className="w-4 h-4" />
-                    Открыть ссылку
-                  </a>
-                </Button>
-              </div>
-            )}
-          </div>
-
-          <div className="flex justify-end">
-            <Button asChild variant="link" className="h-auto p-0 gap-2">
-              <a href={url} target="_blank" rel="noreferrer">
-                <ExternalLink className="w-4 h-4" />
-                Открыть в YouTube
-              </a>
-            </Button>
-          </div>
+        <div className="py-6 text-center">
+          <p className="text-muted-foreground mb-6">
+            Нажми кнопку, чтобы открыть видео на YouTube
+          </p>
+          
+          <Button asChild size="lg" className="gap-2">
+            <a
+              href={normalizedUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <ExternalLink className="w-5 h-5" />
+              Открыть на YouTube
+            </a>
+          </Button>
         </div>
       </DialogContent>
     </Dialog>

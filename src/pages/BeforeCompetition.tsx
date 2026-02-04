@@ -1,9 +1,8 @@
-import { useState } from 'react';
-import { Target, Play, Maximize2, X } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Target, ArrowLeft, ExternalLink } from 'lucide-react';
 import { Layout } from '@/components/Layout';
-import { Button } from '@/components/ui/button';
 import { useThrows } from '@/hooks/useThrows';
-import { VideoViewer } from '@/components/VideoViewer';
+import { normalizeUrl } from '@/lib/url';
 
 const focusStatements = [
   "Stay calm. Stay centered.",
@@ -19,57 +18,45 @@ const warmupVideos = [
 
 export default function BeforeCompetition() {
   const { myThrows } = useThrows();
-  const [focusMode, setFocusMode] = useState(false);
-  const [focusVideoUrl, setFocusVideoUrl] = useState<string | null>(null);
 
   // Select key throws (first 3 with videos)
   const keyThrows = myThrows
     .filter(t => t.videos.length > 0)
     .slice(0, 3);
 
-  const enterFocusMode = (videoUrl: string) => {
-    setFocusVideoUrl(videoUrl);
-    setFocusMode(true);
-  };
-
-  const exitFocusMode = () => {
-    setFocusMode(false);
-    setFocusVideoUrl(null);
-  };
-
   return (
     <Layout>
-      <div className="container mx-auto px-4 md:px-6 py-12 md:py-16">
+      <div className="container mx-auto px-4 md:px-6 py-8 md:py-12">
+        {/* Back button */}
+        <Link to="/" className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-8">
+          <ArrowLeft className="w-4 h-4" />
+          Назад
+        </Link>
+
         {/* Header */}
-        <div className="text-center mb-16 animate-fade-in">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent mb-6">
+        <div className="mb-8">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent mb-4">
             <Target className="w-4 h-4 text-accent-foreground" />
             <span className="text-sm font-medium text-accent-foreground">Competition Mode</span>
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
             Before Competition
           </h1>
-          <p className="text-lg text-muted-foreground max-w-xl mx-auto">
+          <p className="text-muted-foreground">
             Focus. Review. Prepare.
           </p>
         </div>
 
-        <div className="grid gap-12 lg:gap-16">
+        <div className="space-y-12 max-w-2xl">
           {/* Focus Statements */}
-          <section className="animate-fade-in-up">
-            <h2 className="text-2xl font-semibold text-foreground mb-6">
+          <section>
+            <h2 className="text-xl font-semibold text-foreground mb-4">
               Competition Focus
             </h2>
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="space-y-3">
               {focusStatements.map((statement, index) => (
-                <div 
-                  key={index}
-                  className="card-universe p-6 text-center"
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-                  <p className="text-lg font-medium text-foreground">
-                    "{statement}"
-                  </p>
+                <div key={index} className="p-4 rounded-lg bg-card">
+                  <p className="text-foreground">"{statement}"</p>
                 </div>
               ))}
             </div>
@@ -77,91 +64,58 @@ export default function BeforeCompetition() {
 
           {/* Key Throws */}
           {keyThrows.length > 0 && (
-            <section className="animate-fade-in-up" style={{ animationDelay: '200ms' }}>
-              <h2 className="text-2xl font-semibold text-foreground mb-6">
+            <section>
+              <h2 className="text-xl font-semibold text-foreground mb-4">
                 Key Throws to Review
               </h2>
-              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {keyThrows.map((judoThrow) => {
-                  return (
-                    <div key={judoThrow.id} className="card-universe overflow-hidden">
-                      <div className="relative bg-muted p-4">
-                        <VideoViewer
-                          title={judoThrow.name}
-                          video={judoThrow.videos[0]}
-                        />
-                        <Button
-                          size="icon"
-                          variant="secondary"
-                          className="absolute top-2 right-2 rounded-full opacity-80 hover:opacity-100"
-                          onClick={() => enterFocusMode(judoThrow.videos[0].url)}
-                        >
-                          <Maximize2 className="w-4 h-4" />
-                        </Button>
-                      </div>
-                      <div className="p-4">
-                        <h3 className="font-semibold text-foreground">{judoThrow.name}</h3>
-                        {judoThrow.kanji && (
-                          <p className="text-sm text-muted-foreground">{judoThrow.kanji}</p>
-                        )}
-                      </div>
+              <div className="space-y-3">
+                {keyThrows.map((judoThrow) => (
+                  <a
+                    key={judoThrow.id}
+                    href={normalizeUrl(judoThrow.videos[0].url)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-between p-4 rounded-lg bg-card hover:bg-muted transition-colors group"
+                  >
+                    <div>
+                      <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors">
+                        {judoThrow.name}
+                      </h3>
+                      {judoThrow.kanji && (
+                        <p className="text-sm text-muted-foreground">{judoThrow.kanji}</p>
+                      )}
                     </div>
-                  );
-                })}
+                    <ExternalLink className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                  </a>
+                ))}
               </div>
             </section>
           )}
 
           {/* Quick Warm-up */}
-          <section className="animate-fade-in-up" style={{ animationDelay: '400ms' }}>
-            <h2 className="text-2xl font-semibold text-foreground mb-6">
+          <section>
+            <h2 className="text-xl font-semibold text-foreground mb-4">
               Quick Warm-up Videos
             </h2>
-            <div className="grid gap-6 sm:grid-cols-2">
-              {warmupVideos.map((video) => {
-                return (
-                  <div key={video.id} className="card-universe overflow-hidden">
-                    <div className="bg-muted p-4">
-                      <VideoViewer
-                        title={video.title}
-                        video={{ id: video.id, url: video.url, type: 'youtube', title: video.title }}
-                      />
-                    </div>
-                    <div className="p-4">
-                      <h3 className="font-semibold text-foreground">{video.title}</h3>
-                    </div>
-                  </div>
-                );
-              })}
+            <div className="space-y-3">
+              {warmupVideos.map((video) => (
+                <a
+                  key={video.id}
+                  href={normalizeUrl(video.url)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between p-4 rounded-lg bg-card hover:bg-muted transition-colors group"
+                >
+                  <span className="font-semibold text-foreground group-hover:text-primary transition-colors">
+                    {video.title}
+                  </span>
+                  <ExternalLink className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                </a>
+              ))}
             </div>
           </section>
         </div>
       </div>
-
-      {/* Focus Mode Overlay */}
-      {focusMode && focusVideoUrl && (
-        <div className="focus-mode" onClick={exitFocusMode}>
-          <div 
-            className="relative w-full max-w-5xl mx-4 animate-scale-in"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <Button
-              size="icon"
-              variant="secondary"
-              className="absolute -top-12 right-0 rounded-full"
-              onClick={exitFocusMode}
-            >
-              <X className="w-5 h-5" />
-            </Button>
-            <div className="rounded-2xl overflow-hidden shadow-modal bg-card p-4">
-              <VideoViewer
-                title="Focus Mode Video"
-                video={{ id: 'focus-video', url: focusVideoUrl, type: 'youtube' }}
-              />
-            </div>
-          </div>
-        </div>
-      )}
     </Layout>
   );
 }
