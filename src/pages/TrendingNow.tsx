@@ -1,15 +1,13 @@
 import { Link } from 'react-router-dom';
 import { ArrowLeft, TrendingUp, ExternalLink } from 'lucide-react';
 import { Layout } from '@/components/Layout';
-import { Button } from '@/components/ui/button';
-import { normalizeUrl } from '@/lib/url';
 
 const trendingThrows = [
   {
     id: 't1',
     name: 'Uchi Mata',
     kanji: '内股',
-    videoUrl: 'https://www.youtube.com/watch?v=sR4ZVGPd_D4',
+    videoUrl: 'https://www.youtube.com/watch?v=N9lpgFLKqvE',
     views: '1.2M',
     source: 'Efficient Judo',
   },
@@ -68,12 +66,12 @@ export default function TrendingNow() {
           </h1>
         </div>
 
-        {/* Video list */}
+        {/* Video list - simple native anchor tags */}
         <div className="space-y-3 max-w-2xl">
           {trendingThrows.map((item, index) => (
             <a
               key={item.id}
-              href={normalizeUrl(item.videoUrl)}
+              href={item.videoUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-between p-4 rounded-lg bg-card hover:bg-muted transition-colors group"

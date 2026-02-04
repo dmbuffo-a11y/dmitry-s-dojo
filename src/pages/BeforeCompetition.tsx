@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 import { Target, ArrowLeft, ExternalLink } from 'lucide-react';
 import { Layout } from '@/components/Layout';
 import { useThrows } from '@/hooks/useThrows';
-import { normalizeUrl } from '@/lib/url';
 
 const focusStatements = [
   "Stay calm. Stay centered.",
@@ -72,7 +71,7 @@ export default function BeforeCompetition() {
                 {keyThrows.map((judoThrow) => (
                   <a
                     key={judoThrow.id}
-                    href={normalizeUrl(judoThrow.videos[0].url)}
+                    href={judoThrow.videos[0].url}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center justify-between p-4 rounded-lg bg-card hover:bg-muted transition-colors group"
@@ -101,7 +100,7 @@ export default function BeforeCompetition() {
               {warmupVideos.map((video) => (
                 <a
                   key={video.id}
-                  href={normalizeUrl(video.url)}
+                  href={video.url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-between p-4 rounded-lg bg-card hover:bg-muted transition-colors group"
