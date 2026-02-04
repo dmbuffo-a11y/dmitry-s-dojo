@@ -1,9 +1,7 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Microscope, ExternalLink, ArrowLeft } from 'lucide-react';
 import { Layout } from '@/components/Layout';
 import { useThrows } from '@/hooks/useThrows';
-import { normalizeUrl } from '@/lib/url';
 
 export default function TechniqueAnalysis() {
   const { myThrows, isLoading } = useThrows();
@@ -33,7 +31,7 @@ export default function TechniqueAnalysis() {
           </p>
         </div>
 
-        {/* Video list */}
+        {/* Video list - simple native anchor tags */}
         {isLoading ? (
           <div className="space-y-3 max-w-2xl">
             {[...Array(4)].map((_, i) => (
@@ -45,7 +43,7 @@ export default function TechniqueAnalysis() {
             {throwsWithVideos.map((judoThrow) => (
               <a
                 key={judoThrow.id}
-                href={normalizeUrl(judoThrow.videos[0].url)}
+                href={judoThrow.videos[0].url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-between p-4 rounded-lg bg-card hover:bg-muted transition-colors group"

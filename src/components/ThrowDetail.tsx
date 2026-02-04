@@ -2,7 +2,6 @@ import { X, ExternalLink } from 'lucide-react';
 import { JudoThrow } from '@/types/judo';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { normalizeUrl } from '@/lib/url';
 
 interface ThrowDetailProps {
   judoThrow: JudoThrow | null;
@@ -36,12 +35,13 @@ export function ThrowDetail({ judoThrow, isOpen, onClose, onMoveToMyThrows }: Th
           </Button>
         </DialogHeader>
 
+        {/* Video links - simple native anchor tags */}
         <div className="space-y-3 mt-4">
           {judoThrow.videos.length > 0 ? (
             judoThrow.videos.map((video, index) => (
               <a
                 key={video.id}
-                href={normalizeUrl(video.url)}
+                href={video.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-between p-4 rounded-lg bg-muted hover:bg-muted/80 transition-colors group"
